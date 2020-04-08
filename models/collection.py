@@ -1,6 +1,6 @@
-from os import path, listdir, getcwd, walk
+from os import path, listdir
 from typing import List, Dict
-from .document import Document
+from models.document import Document
 from tqdm import tqdm
 from helpers.helpers import load_pickle_file, save_pickle_file
 
@@ -25,20 +25,17 @@ class Collection:
                 for filename in tqdm(listdir(path_directory)):
                     document = Document(
                         document_id=document_id,
-                        parent_folder=str(directory_index),
+                        parent_folder=directory_index,
                         name=filename,
                     )
                     document.load_content(self.path_to_data)
-                    occurences = document.get_occurrences()
-                    for token, occurence in occurences.items():
+                    occurrences = document.get_occurrences()
+                    for token, occurrence in occurrences.items():
                         if token not in self.inverted_index:
-                            self.inverted_index[token] = {document_id: occurence}
+                            self.inverted_index[token] = {document_id: occurrence}
                         else:
-                            self.inverted_index[token][document_id] = occurence
+                            self.inverted_index[token][document_id] = occurrence
                     self.documents.append(document)
                     nb_document_loaded += 1
                     document_id = +1
             save_pickle_file(self.name, "preprocessed_documents", self.documents)
-
-
-collection = Collection("collection")
