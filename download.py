@@ -26,7 +26,6 @@ class Downloader:
 
     def __download_data_zip(self):
         try:
-            t0 = time.time()
             pbar = tqdm(desc="downloading the cs276 data", total=94144554)
             with requests.get(self.data_zip_url, stream=True) as r:
                 r.raise_for_status()
@@ -35,7 +34,6 @@ class Downloader:
                         if chunk:
                             f.write(chunk)
                             pbar.update(len(chunk))
-            print(f"download finished in {int(time.time() - t0)} seconds")
             return True
         except Exception as e:
             print(f"Could not download the data set: {e}")
