@@ -17,6 +17,7 @@ class Collection:
     def __load_documents(self):
         try:
             self.documents = load_pickle_file(self.name, "preprocessed_documents")
+            self.inverted_index = load_pickle_file(self.name, "inverted_index")
         except FileNotFoundError:
             nb_document_loaded = 0
             document_id = 1
@@ -30,12 +31,13 @@ class Collection:
                     )
                     document.load_content(self.path_to_data)
                     occurrences = document.get_occurrences()
+                    self.documents.append(document)
                     for token, occurrence in occurrences.items():
                         if token not in self.inverted_index:
                             self.inverted_index[token] = {document_id: occurrence}
                         else:
                             self.inverted_index[token][document_id] = occurrence
-                    self.documents.append(document)
                     nb_document_loaded += 1
                     document_id = +1
             save_pickle_file(self.name, "preprocessed_documents", self.documents)
+            save_pickle_file(self.name, "inverted_index", self.inverted_index)
