@@ -3,6 +3,7 @@ import nltk
 
 STOPWORDS = nltk.corpus.stopwords.words("english")
 
+
 class Document:
 
     def __init__(self, document_id: int, parent_folder: int, name: str):
@@ -16,7 +17,7 @@ class Document:
 
     def __clean_tokens(self):
         temp = filter(lambda t: t.isalpha(), self.tokens)  # non alpha words
-        temp = filter(lambda t: not(t in STOPWORDS), temp)  # remove stopwords
+        temp = filter(lambda t: not (t in STOPWORDS), temp)  # remove stopwords
         self.tokens = list(temp)
         self.n_tokens = len(self.tokens)
 
@@ -46,7 +47,7 @@ class Document:
         if len(self.occurrences) == 0:
             self.__construct_occurrences()
         return self.occurrences
-    
+
     def lemmatize(self, lemmatizer):
         self.tokens = list(map(lemmatizer.lemmatize, self.tokens))
 
@@ -55,10 +56,10 @@ class Document:
             self.__construct_key_words()
         return self.key_words
 
-    def get_TF(self, token):
+    def get_tf(self, token):
         try:
             return self.occurrences[token] / self.n_tokens
-        except :
+        except:
             return 0
 
 
@@ -68,3 +69,4 @@ if __name__ == "__main__":
     doc.lemmatize(nltk.stem.WordNetLemmatizer())
     print(doc.get_occurrences())
     print(doc.get_key_words())
+    print(doc.get_tf("school"))
