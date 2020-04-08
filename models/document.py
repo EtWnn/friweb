@@ -41,8 +41,7 @@ class Document:
 
 
 if __name__ == "__main__":
-    # doc = Document(0, 0, "3dradiology.stanford.edu_")
-    # doc.load_content("data/cs276")
-    # print(doc.tokens)
-    # print(doc.n_tokens)
-    pass
+    doc = Document(0, 0, "3dradiology.stanford.edu_")
+    doc.load_content("data/cs276")
+    print(doc.tokens)
+    print(doc.n_tokens)
