@@ -3,8 +3,8 @@ import nltk
 
 STOPWORDS = nltk.corpus.stopwords.words("english")
 
-class Document:
 
+class Document:
     def __init__(self, document_id: int, parent_folder: int, name: str):
         self.document_id = document_id
         self.parent_folder = parent_folder
@@ -22,7 +22,7 @@ class Document:
 
     def __clean_tokens(self):
         temp = filter(lambda t: t.isalpha(), self.tokens)  # non alpha words
-        temp = filter(lambda t: not(t in STOPWORDS), temp)  # remove stopwords
+        temp = filter(lambda t: not (t in STOPWORDS), temp)  # remove stopwords
         self.tokens = list(temp)
         self.n_tokens = len(self.tokens)
 
@@ -41,7 +41,8 @@ class Document:
 
 
 if __name__ == "__main__":
-    doc = Document(0, 0, "3dradiology.stanford.edu_")
-    doc.load_content("data/cs276")
-    print(doc.tokens)
-    print(doc.n_tokens)
+    # doc = Document(0, 0, "3dradiology.stanford.edu_")
+    # doc.load_content("data/cs276")
+    # print(doc.tokens)
+    # print(doc.n_tokens)
+    pass
