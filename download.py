@@ -46,7 +46,7 @@ class Downloader:
                     zip_file.extract(member=file, path=self.save_folder)
                 print("extraction finished")
             os.rename(self.save_folder + "pa1-data", self.setup_folder)
-            os.remove(self.data_zip_url)
+            os.remove(self.data_zip_name)
             return True
         except Exception as e:
             print(f"Could not unzip the data set: {e}")
