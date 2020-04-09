@@ -14,9 +14,9 @@ class Document:
         self.occurrences = {}
         self.key_words = []
 
-    def __clean_tokens(self):
+    def __clean_tokens(self, stopwords):
         temp = filter(lambda t: t.isalpha(), self.tokens)  # non alpha words
-        temp = filter(lambda t: not (t in STOPWORDS), temp)  # remove stopwords
+        temp = filter(lambda t: not (t in stopwords), temp)  # remove stopwords
         self.tokens = list(temp)
         self.n_tokens = len(self.tokens)
 
@@ -35,19 +35,20 @@ class Document:
         scores.sort(reverse=True)
         self.key_words = [s[1] for s in scores[:5]]
 
-    def load_content(self, collection_path):
+    def load_content(self, collection_path, stopwords, lemmatizer):
         file_path = os.path.join(collection_path, f"{self.parent_folder}/{self.name}")
         with open(file_path, "r") as file:
             for line in file.readlines():
                 self.tokens.extend(line.rstrip("\n").split(" "))
-        self.__clean_tokens()
+        self.__clean_tokens(stopwords)
+        self.__lemmatize(lemmatizer)
 
     def get_occurrences(self):
         if len(self.occurrences) == 0:
             self.__construct_occurrences()
         return self.occurrences
 
-    def lemmatize(self, lemmatizer):
+    def __lemmatize(self, lemmatizer):
         self.tokens = list(map(lemmatizer.lemmatize, self.tokens))
 
     def get_key_words(self):
@@ -64,8 +65,7 @@ class Document:
 
 if __name__ == "__main__":
     doc = Document(0, 0, "3dradiology.stanford.edu_")
-    doc.load_content("data/cs276")
-    doc.lemmatize(nltk.stem.WordNetLemmatizer())
+    doc.load_content("data/cs276", STOPWORDS, nltk.stem.WordNetLemmatizer())
     print(doc.get_occurrences())
     print(doc.get_key_words())
     print(doc.get_tf("school"))

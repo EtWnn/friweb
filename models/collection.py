@@ -3,16 +3,16 @@ from typing import List, Dict
 from models.document import Document
 from tqdm import tqdm
 from helpers.helpers import load_pickle_file, save_pickle_file
-import nltk
 
 
 class Collection:
-    def __init__(self, name, path_to_data="./data/"):
+    def __init__(self, name, stopwords, lemmatizer, path_to_data="./data/"):
         self.name = name
         self.documents: List[Document] = []
         self.inverted_index: Dict[str, Dict[int, int]] = {}
         self.path_to_data = path_to_data + name
-        self.lemmatizer = nltk.stem.WordNetLemmatizer()
+        self.stopwords = stopwords
+        self.lemmatizer = lemmatizer
 
         self.__load_documents()
 
@@ -31,8 +31,7 @@ class Collection:
                         parent_folder=directory_index,
                         name=filename,
                     )
-                    document.load_content(self.path_to_data)
-                    document.lemmatize(self.lemmatizer)
+                    document.load_content(self.path_to_data, self.stopwords, self.lemmatizer)
                     occurrences = document.get_occurrences()
                     self.documents.append(document)
                     for token, occurrence in occurrences.items():
