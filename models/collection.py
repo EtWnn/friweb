@@ -7,11 +7,11 @@ import nltk
 
 
 class Collection:
-    def __init__(self, name, path_to_data="./data/cs276"):
+    def __init__(self, name, path_to_data="./data/"):
         self.name = name
         self.documents: List[Document] = []
         self.inverted_index: Dict[str, Dict[int, int]] = {}
-        self.path_to_data = path_to_data
+        self.path_to_data = path_to_data + name
         self.lemmatizer = nltk.stem.WordNetLemmatizer()
 
         self.__load_documents()
