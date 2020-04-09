@@ -7,7 +7,7 @@ class Query:
         self.stopwords = stopwords
         self.lemmatizer = lemmatizer
         self.tokens = content.split(" ")
-        self._length = len(self.tokens)
+        self.length = len(self.tokens)
         self.term_frequencies = {}
         self.__process_query()
 
@@ -28,7 +28,7 @@ class Query:
         self.__remove_stopwords()
         self.__lemmatize()
         self.__compute_term_frequencies()
-        self.__length = len(self.tokens)
+        self.length = len(self.tokens)
 
     def get_tf(self, term):
         target_term = self.lemmatizer.lemmatize(term)
