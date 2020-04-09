@@ -13,6 +13,7 @@ class Document:
         self.n_tokens = 0
         self.occurrences = {}
         self.key_words = []
+        self.length = 0
 
     def __clean_tokens(self):
         temp = filter(lambda t: t.isalpha(), self.tokens)  # non alpha words
@@ -40,6 +41,7 @@ class Document:
         with open(file_path, "r") as file:
             for line in file.readlines():
                 self.tokens.extend(line.rstrip("\n").split(" "))
+        self.length = len(self.tokens)
         self.__clean_tokens()
 
     def get_occurrences(self):
