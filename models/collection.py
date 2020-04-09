@@ -3,6 +3,7 @@ from typing import List, Dict
 from models.document import Document
 from tqdm import tqdm
 from helpers.helpers import load_pickle_file, save_pickle_file
+import nltk
 
 
 class Collection:
@@ -11,6 +12,7 @@ class Collection:
         self.documents: List[Document] = []
         self.inverted_index: Dict[str, Dict[int, int]] = {}
         self.path_to_data = path_to_data
+        self.lemmatizer = nltk.stem.WordNetLemmatizer()
 
         self.__load_documents()
 
@@ -30,6 +32,7 @@ class Collection:
                         name=filename,
                     )
                     document.load_content(self.path_to_data)
+                    document.lemmatize(self.lemmatizer)
                     occurrences = document.get_occurrences()
                     self.documents.append(document)
                     for token, occurrence in occurrences.items():
