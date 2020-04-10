@@ -1,11 +1,6 @@
 import os
 import nltk
 
-try:
-    STOPWORDS = nltk.corpus.stopwords.words("english")
-except LookupError:
-    nltk.download("stopwords")
-
 
 class Document:
     def __init__(self, document_id: int, parent_folder: int, name: str):

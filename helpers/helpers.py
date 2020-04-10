@@ -2,7 +2,7 @@ from pickle import load, dump
 
 
 def merge_appearance_lists(appearance_list_1, appearance_list_2, method="union"):
-    """Merge two posting lists into one following the 'union' method or the 'intersection' method"""
+    """Merge two appearance lists into one following the 'union' method or the 'intersection' method"""
     if method == "union":
         result = set(appearance_list_1)
         result.update(appearance_list_2)

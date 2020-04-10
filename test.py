@@ -14,7 +14,7 @@ def show_accuracy():
     performance of a model
     :return:
     """
-    print("\n accuracy by query:")
+    print("\naccuracy by query:")
     if not isfile("tests_data/predictions/9.out".format()):
         compute_dev_predictions()
     for i in range(1, 9):
