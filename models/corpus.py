@@ -1,6 +1,5 @@
 from os import path, listdir
 from math import log, sqrt
-from typing import List, Dict
 from models.document import Document
 from tqdm import tqdm
 from helpers.helpers import load_pickle_file, save_pickle_file
